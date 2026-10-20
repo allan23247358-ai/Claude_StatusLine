@@ -1,0 +1,43 @@
+{
+  "name": "claude-statusbar",
+  "displayName": "Claude Status Bar",
+  "description": "Model, effort, 5h usage, context and plugin activity of Claude Code in the VS Code status bar.",
+  "version": "0.1.2",
+  "publisher": "allan",
+  "license": "MIT",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Other", "Visualization"],
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "contributes": {
+    "commands": [
+      { "command": "claudeStatusBar.refresh", "title": "Claude Status Bar: Refresh" },
+      { "command": "claudeStatusBar.openTranscript", "title": "Claude Status Bar: Open Session Transcript" }
+    ],
+    "configuration": {
+      "title": "Claude Status Bar",
+      "properties": {
+        "claudeStatusBar.plugins": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Plugins and MCP servers to show. Empty = detect the ones you installed."
+        },
+        "claudeStatusBar.excludePlugins": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": ["Claude Docs"],
+          "description": "Detected plugins to hide (case-insensitive)."
+        },
+        "claudeStatusBar.contextWindow": {
+          "type": "object",
+          "additionalProperties": { "type": "number" },
+          "default": {},
+          "description": "Context window size per model ID, e.g. {\"claude-opus-5-5\": 1000000}. Haiku defaults to 200k, other models to 1M."
+        },
+        "claudeStatusBar.warningThreshold": { "type": "number", "default": 70, "description": "Percent at which text turns yellow." },
+        "claudeStatusBar.errorThreshold": { "type": "number", "default": 90, "description": "Percent at which text turns red." }
+      }
+    }
+  }
+}
